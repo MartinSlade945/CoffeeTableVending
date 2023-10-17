@@ -1,9 +1,9 @@
-#ifndef CanDispenser_h
-#define CanDispenser_h
+#ifndef SodaDispenser_h
+#define SodaDispenser_h
 
 #include <Arduino.h>
 
-class CanDispenser {
+class SodaDispenser {
   private:
     unsigned long endTimeMillis = 0; // Stores the time to turn the solenoid off
     const unsigned long solenoidTimeout = 500; // Time Interval solenoid is active in milliseconds
@@ -13,6 +13,7 @@ class CanDispenser {
     void init(int digitalOutputPin);
     void dispense();
     void update();
+    bool busy();
 };
 
 #endif

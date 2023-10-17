@@ -1,10 +1,10 @@
-#include "Manager.h"
-Manager manager;
+#include "SysControl.h"
+SysControl sysControl;
 
 void setup() {
-  manager.init();
+  sysControl.init();
 }
 
 void loop() {
-  manager.update();
+  sysControl.update();
 }

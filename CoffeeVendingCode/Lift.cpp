@@ -1,11 +1,10 @@
-
 #include "Lift.h"
 
 void Lift::init(int Enable, int Direction, int Step, int Home) {
-  enablePin = Enable;        //
-  stepPin = Step;            //
-  directionPin = Direction;  //
-  homingPin = Home;          //
+  enablePin = Enable;
+  stepPin = Step;        
+  directionPin = Direction;  
+  homingPin = Home;
 
   pinMode(homingPin,INPUT); //Set homing pin to a digital input
   liftMotor = new AccelStepper(1, stepPin, directionPin);

@@ -1,6 +1,5 @@
 #ifndef SodaDispenser_h
 #define SodaDispenser_h
-
 #include <Arduino.h>
 
 class SodaDispenser {

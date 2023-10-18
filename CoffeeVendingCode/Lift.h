@@ -46,7 +46,6 @@ class Lift {
     void down();
     void update();
     bool busy();
-
 };
 
 #endif

@@ -1,4 +1,3 @@
-
 #define LEFT_SOLENOID_PIN 0
 #define RIGHT_SOLENOID_PIN 0
 

@@ -38,8 +38,8 @@ class SysControl {
 
   public:
     Lift lift;
-    SodaDispenser leftCanDispenser;
-    SodaDispenser rightCanDispenser;
+    SodaDispenser leftSodaDispenser;
+    SodaDispenser rightSodaDispenser;
     CandyDispenser candyDispenser1;
     CandyDispenser candyDispenser2;
     CandyDispenser candyDispenser3;    
@@ -48,6 +48,9 @@ class SysControl {
     void init();
     void update();
     void readButtons();
+    void StartDispensing();
+    void HandleDispensing();
+
 };
 
 #endif // SysControl.h

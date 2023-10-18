@@ -88,7 +88,7 @@ void SysControl::readButtons() {
   candyButton3State = readCandyButton3;
 }
 
-void StartDispensing() {
+void SysControl::StartDispensing() {
   switch (dispenseOption) {
     case SODA1:
       leftSodaDispenser.dispense();
@@ -110,7 +110,7 @@ void StartDispensing() {
   }
 }
 
-void HandleDispensing() {
+void SysControl::HandleDispensing() {
   switch (dispenseOption) {
     case SODA1:
       if (!leftSodaDispenser.busy()) {

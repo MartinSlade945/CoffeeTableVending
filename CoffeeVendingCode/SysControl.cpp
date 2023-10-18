@@ -36,56 +36,10 @@ void SysControl::update() {
       break;
     case START_DISPENSING:
       actionState = DISPENSING;
-      switch (dispenseOption) {
-        case SODA1:
-          leftSodaDispenser.dispense();
-          break;
-        case SODA2:
-          rightSodaDispenser.dispense();
-          break;
-        case CANDY1:
-          candyDispenser1.dispense();
-          break;
-        case CANDY2:
-          candyDispenser2.dispense();
-          break;
-        case CANDY3:
-          candyDispenser3.dispense();
-          break;
-        case NONE:
-          break;
-      }
+      StartDispensing();
       break;
     case DISPENSING:
-      switch (dispenseOption) {
-        case SODA1:
-          if (!leftSodaDispenser.busy()) {
-            actionState = START_LIFT_RISING;
-          }
-          break;
-        case SODA2:
-          if (!rightSodaDispenser.busy()) {
-            actionState = START_LIFT_RISING;
-          }
-          break;
-        case CANDY1:
-          if (!candyDispenser1.busy()) {
-            actionState = START_LIFT_RISING;
-          }
-          break;
-        case CANDY2:
-          if (!candyDispenser2.busy()) {
-            actionState = START_LIFT_RISING;
-          }
-          break;
-        case CANDY3:
-          if (!candyDispenser3.busy()) {
-            actionState = START_LIFT_RISING;
-          }
-          break;
-        case NONE:
-          break;
-      }
+      HandleDispensing();
       break;
     case START_LIFT_RISING:
       lift.up();
@@ -132,4 +86,58 @@ void SysControl::readButtons() {
   candyButton1State = readCandyButton1;
   candyButton2State = readCandyButton2;
   candyButton3State = readCandyButton3;
+}
+
+void StartDispensing() {
+  switch (dispenseOption) {
+    case SODA1:
+      leftSodaDispenser.dispense();
+      break;
+    case SODA2:
+      rightSodaDispenser.dispense();
+      break;
+    case CANDY1:
+      candyDispenser1.dispense();
+      break;
+    case CANDY2:
+      candyDispenser2.dispense();
+      break;
+    case CANDY3:
+      candyDispenser3.dispense();
+      break;
+    case NONE:
+      break;
+  }
+}
+
+void HandleDispensing() {
+  switch (dispenseOption) {
+    case SODA1:
+      if (!leftSodaDispenser.busy()) {
+        actionState = START_LIFT_RISING;
+      }
+      break;
+    case SODA2:
+      if (!rightSodaDispenser.busy()) {
+        actionState = START_LIFT_RISING;
+      }
+      break;
+    case CANDY1:
+      if (!candyDispenser1.busy()) {
+        actionState = START_LIFT_RISING;
+      }
+      break;
+    case CANDY2:
+      if (!candyDispenser2.busy()) {
+        actionState = START_LIFT_RISING;
+      }
+      break;
+    case CANDY3:
+      if (!candyDispenser3.busy()) {
+        actionState = START_LIFT_RISING;
+      }
+      break;
+    case NONE:
+      break;
+  }
 }

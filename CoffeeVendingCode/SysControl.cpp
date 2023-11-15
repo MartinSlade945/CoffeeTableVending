@@ -5,12 +5,20 @@ void SysControl::init() {
   Serial.begin(115200);
   Serial.println("Serial Connected");
 
-  lift.init(LIFT_ENABLE_PIN, LIFT_DIRECTION_PIN, LIFT_STEP_PIN, LIFT_HOMING_PIN);
   leftSodaDispenser.init(LEFT_SOLENOID_PIN);
   rightSodaDispenser.init(RIGHT_SOLENOID_PIN);
+
+  lift.init(LIFT_ENABLE_PIN, LIFT_DIRECTION_PIN, LIFT_STEP_PIN, LIFT_HOMING_PIN);
+  
   candyDispenser1.init(CANDY_1_ENABLE_PIN, CANDY_1_DIRECTION_PIN, CANDY_1_STEP_PIN);
   candyDispenser2.init(CANDY_2_ENABLE_PIN, CANDY_2_DIRECTION_PIN, CANDY_2_STEP_PIN);
   candyDispenser3.init(CANDY_3_ENABLE_PIN, CANDY_3_DIRECTION_PIN, CANDY_3_STEP_PIN);
+
+  soda1Button.init(SODA_BUTTON_1_PIN);
+  soda2Button.init(SODA_BUTTON_2_PIN);
+  candy1Button.init(CANDY_BUTTON_1_PIN);
+  candy2Button.init(CANDY_BUTTON_2_PIN);
+  candy3Button.init(CANDY_BUTTON_3_PIN);
 }
 
 void SysControl::update() {
@@ -20,21 +28,30 @@ void SysControl::update() {
   candyDispenser3.update();
   leftSodaDispenser.update();
   rightSodaDispenser.update();
+  soda1Button.update();
+  soda2Button.update();
+  candy1Button.update();
+  candy2Button.update();
+  candy3Button.update();
+}
 
+void SysControl::runStateModel() {
   switch (actionState) {
     case WAITING_INPUT:
       readButtons();
       break;
     case START_LIFT_FALLING:
+      Serial.println("DEBUG: Lowering Lift");
       lift.down();
       actionState = LIFT_FALLING;
       break;
     case LIFT_FALLING:
-      if (!lift.busy()) {
+      if (!lift.busy()) {       
         actionState = START_DISPENSING;
       }
       break;
     case START_DISPENSING:
+      Serial.println("DEBUG: Start Dispensing");
       actionState = DISPENSING;
       StartDispensing();
       break;
@@ -42,50 +59,48 @@ void SysControl::update() {
       HandleDispensing();
       break;
     case START_LIFT_RISING:
+      Serial.println("DEBUG: Waiting for Soda");
+      delay(sodaFallTime);
+      Serial.println("DEBUG: Lift Rising");
       lift.up();
       actionState = LIFT_RISING;
       break;
     case LIFT_RISING:
       if (!lift.busy()) {
+        Serial.println("DEBUG: Complete!");
         actionState = WAITING_INPUT;
         dispenseOption = NONE;
       }
       break;
   }
 }
-void SysControl::readButtons() {
-  bool readSodaButton1 = digitalRead(SODA_BUTTON_1_PIN);
-  bool readSodaButton2 = digitalRead(SODA_BUTTON_2_PIN);
-  bool readCandyButton1 = digitalRead(CANDY_BUTTON_1_PIN);
-  bool readCandyButton2 = digitalRead(CANDY_BUTTON_2_PIN);
-  bool readCandyButton3 = digitalRead(CANDY_BUTTON_3_PIN);
 
-  if (readSodaButton1 && !sodaButton1State) {
+void SysControl::readButtons() {
+  if (soda1Button.readButton()) {
+    Serial.println("DEBUG: Button 1!");
     dispenseOption = SODA1;
     actionState = START_LIFT_FALLING;
   }
-  if (readSodaButton2 && !sodaButton2State) {
+  else if (soda2Button.readButton()) {
+    Serial.println("DEBUG: Button 2!");
     dispenseOption = SODA2;
     actionState = START_LIFT_FALLING;
   }
-  if (readCandyButton1 && !candyButton1State) {
+  else if (candy1Button.readButton()) {
+    Serial.println("DEBUG: Button 3!");
     dispenseOption = CANDY1;
     actionState = START_LIFT_FALLING;
   }
-  if (readCandyButton2 && !candyButton2State) {
+  else if (candy2Button.readButton()) {
+    Serial.println("DEBUG: Button 4!");
     dispenseOption = CANDY2;
     actionState = START_LIFT_FALLING;
   }
-  if (readCandyButton3 && !candyButton3State) {
+  else if (candy3Button.readButton()) {
+    Serial.println("DEBUG: Button 5!");
     dispenseOption = CANDY3;
     actionState = START_LIFT_FALLING;
   }
-
-  sodaButton1State = readSodaButton1;
-  sodaButton2State = readSodaButton2;
-  candyButton1State = readCandyButton1;
-  candyButton2State = readCandyButton2;
-  candyButton3State = readCandyButton3;
 }
 
 void SysControl::StartDispensing() {

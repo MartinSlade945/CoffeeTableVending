@@ -9,7 +9,7 @@ class CandyDispenser {
     int stepPin = 0; //Stores the step pin
     int directionPin = 0; //Stores the direction pin
 
-    const int stepsPerRotation = 200; //Number of steps to rotate 1
+    const int stepsPerRotation = 3200; //Number of steps to rotate 1
     const int motorSpeed = 1 * stepsPerRotation;
     const int motorAccel = 1 * stepsPerRotation;
 

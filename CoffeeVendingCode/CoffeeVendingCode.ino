@@ -3,6 +3,7 @@ SysControl sysControl;
 
 void setup() {
   sysControl.init();
+  Serial.println("DEBUG: Setup Complete");
 }
 
 void loop() {

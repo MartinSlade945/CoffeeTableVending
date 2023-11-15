@@ -1,14 +1,12 @@
 #include "CandyDispenser.h"
 
 void CandyDispenser::init(int Enable, int Direction, int Step) {
-  enablePin = Enable;
-  stepPin = Step;
-  directionPin = Direction;
+  pinMode(Enable,OUTPUT);
+  digitalWrite(Enable,LOW);
 
-  coilMotor = new AccelStepper(1, stepPin, directionPin);
+  coilMotor = new AccelStepper(1, Step, Direction);
   coilMotor->setMaxSpeed(motorSpeed);
   coilMotor->setAcceleration(motorAccel);
-  coilMotor->setEnablePin(enablePin);
   coilMotor->setPinsInverted(false, false, true);
 }
 
@@ -21,7 +19,7 @@ void CandyDispenser::update() {
 }
 
 bool CandyDispenser::busy() {
-  if (!coilMotor->isRunning()) {
+  if (coilMotor->isRunning()) {
     return true;
   }
   return false;

@@ -11,15 +11,15 @@ class Lift {
     int directionPin = 0; //Stores the direction pin
     int homingPin = 0; //Stores the homing pin
 
-    const int stepsPerRev = 200; //number of steps per rev
+    const int stepsPerRev = 3200; //number of steps per rev
     const int MMPerRev = 20*2; //20 tooth gear, 2mm Pitch
     const float stepsPerMM = stepsPerRev / MMPerRev; 
 
-    const int upPositionMM = 310; //Travel in MM
-    const float upSpeedMM = 40; //up speed in MM/s
-    const float upAccelMM = 80; //up Acceleration in MM/s/s
-    const float downSpeedMM = 40; //down speed in MM/s
-    const float downAccelMM = 80; //down Acceleration in MM/s/s 
+    const int upPositionMM = 303; //Travel in MM
+    const float upSpeedMM = 200; //up speed in MM/s
+    const float upAccelMM = 200; //up Acceleration in MM/s/s
+    const float downSpeedMM = 200; //down speed in MM/s
+    const float downAccelMM = 200; //down Acceleration in MM/s/s 
 
     const int upSpeedSteps   = floor(upSpeedMM * stepsPerMM);
     const int downSpeedSteps = floor(downSpeedMM * stepsPerMM);

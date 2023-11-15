@@ -6,14 +6,11 @@
 #include "SodaDispenser.h"
 #include "Lift.h"
 #include "CandyDispenser.h"
+#include "Button.h"
 
 class SysControl {
   private:
-    bool sodaButton1State  = false;
-    bool sodaButton2State  = false;
-    bool candyButton1State = false;
-    bool candyButton2State = false;
-    bool candyButton3State = false;
+    int sodaFallTime = 1000;
 
     typedef enum DispenseOption : byte {
       NONE,
@@ -42,15 +39,20 @@ class SysControl {
     SodaDispenser rightSodaDispenser;
     CandyDispenser candyDispenser1;
     CandyDispenser candyDispenser2;
-    CandyDispenser candyDispenser3;    
- 
+    CandyDispenser candyDispenser3;  
+    Button soda1Button;  
+    Button soda2Button;
+    Button candy1Button;
+    Button candy2Button;
+    Button candy3Button;
+
     SysControl();
     void init();
     void update();
     void readButtons();
     void StartDispensing();
     void HandleDispensing();
-
+    void runStateModel();
 };
 
 #endif // SysControl.h

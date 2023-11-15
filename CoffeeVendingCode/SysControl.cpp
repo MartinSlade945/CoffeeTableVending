@@ -9,7 +9,7 @@ void SysControl::init() {
   rightSodaDispenser.init(RIGHT_SOLENOID_PIN);
 
   lift.init(LIFT_ENABLE_PIN, LIFT_DIRECTION_PIN, LIFT_STEP_PIN, LIFT_HOMING_PIN);
-  
+
   candyDispenser1.init(CANDY_1_ENABLE_PIN, CANDY_1_DIRECTION_PIN, CANDY_1_STEP_PIN);
   candyDispenser2.init(CANDY_2_ENABLE_PIN, CANDY_2_DIRECTION_PIN, CANDY_2_STEP_PIN);
   candyDispenser3.init(CANDY_3_ENABLE_PIN, CANDY_3_DIRECTION_PIN, CANDY_3_STEP_PIN);
@@ -33,6 +33,8 @@ void SysControl::update() {
   candy1Button.update();
   candy2Button.update();
   candy3Button.update();
+
+  runStateModel();
 }
 
 void SysControl::runStateModel() {
